@@ -52,6 +52,7 @@ RSpec.describe QuestionsController, type: :controller do
 				expect(response).to redirect_to question_path(assigns(:question))
 			end
 		end
+		
 		context 'with invalid attributes' do
 			it 'doesnot saves a new question to database' do
 				expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
