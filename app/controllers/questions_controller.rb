@@ -5,6 +5,7 @@ class QuestionsController < ApplicationController
 
 	def show
 		@question = Question.find(params[:id])
+
 	end
 
 	def new
@@ -13,7 +14,12 @@ class QuestionsController < ApplicationController
 
 	def create
 		@question = Question.create(question_params)
-		redirect_to @question		
+
+		if @question.save 
+			redirect_to @question
+		else
+			render :new
+		end
 	end
 
 	private
