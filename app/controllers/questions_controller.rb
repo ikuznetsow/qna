@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
 	end
 
 	def show
+		@answer = @question.answers.build
 	end
 
 	def new
@@ -24,7 +25,7 @@ class QuestionsController < ApplicationController
 
 	private
 	def question_params
-		params.require(:question).permit(:title, :body)
+		params.require(:question).permit(:title, :body, answers_attibutes: [:body])
 	end
 
 	def load_question
