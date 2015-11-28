@@ -1,0 +1,19 @@
+h4= @question.title
+p= @question.body
+
+-if @question.answers.any?
+  h4 Answers
+  - @question.answers.each do |answer|
+    p.answer-body= answer.body
+
+h4 Your answer:
+= form_for [@question, @answer] do |f|
+  /- if @answer.errors.any?
+    ul
+      - @answer.errors.full_messages.each do |message|
+        li= message
+  p= f.text_area :body
+  p= f.submit 'Create Answer'
+
+
+= link_to 'Back', questions_path
