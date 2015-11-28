@@ -1,1 +1,6 @@
-new.html.slim
+= form_for @question do |f|
+  p= f.label :title
+  = f.text_field :title
+  p= f.label :body, 'Text'
+  = f.text_area :body
+  p= f.submit 'Create'
