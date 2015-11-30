@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question, notice: 'You answer was successfully created.'
     else
-      flash[:notice] = 'Please fill in answer body'
+      flash[:notice] = 'Please fill in answer body.'
       redirect_to @question
     end
   end

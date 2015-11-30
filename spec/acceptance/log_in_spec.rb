@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'User sign-in', %q{
-  In order to be able to ask qustions
+feature 'User log in', %q{
+  In order to be able to ask/answer qustions
   As an User
-  I want to be able to signin
+  I want to be able to login
 } do
 
   given(:user) { create(:user) }
