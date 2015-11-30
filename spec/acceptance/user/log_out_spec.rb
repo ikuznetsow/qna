@@ -15,5 +15,4 @@ feature 'User log out', %q{
     expect(page).to have_content 'Signed out successfully'
     expect(current_path).to eq root_path
   end
-
 end
