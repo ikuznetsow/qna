@@ -16,6 +16,7 @@ class QuestionsController < ApplicationController
 
 	def create
 		@question = Question.new(question_params)
+		@question.user_id = current_user.id
 
 		if @question.save 
 			flash[:notice] = 'Your question successfully created.'
@@ -27,7 +28,7 @@ class QuestionsController < ApplicationController
 
 	private
 	def question_params
-		params.require(:question).permit(:title, :body, answers_attibutes: [:body])
+		params.require(:question).permit(:title, :body, :user_id, answers_attibutes: [:body])
 	end
 
 	def load_question

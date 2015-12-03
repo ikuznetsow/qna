@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Question with related Answers', %q{
+feature 'Browse question with related answers', %q{
   In order to ....
   As an User
   I want to be able answers related to questions

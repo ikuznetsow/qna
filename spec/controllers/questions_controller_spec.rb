@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
 	describe 'GET #index'	do
-		let(:questions) { create_list(:question, 2) } 
+		let(:user) { create(:user) }
+		let(:questions) { create_list(:question, 2, user: user) } 
 
 		before { get :index } 
 		
@@ -16,7 +17,8 @@ RSpec.describe QuestionsController, type: :controller do
 	end
 
 	describe 'GET #show' do
-		let(:question) { create(:question) } 
+		let(:user) { create(:user) }
+		let(:question) { create(:question, user: user) } 
 
 		before { get :show, id: question }
 
@@ -47,6 +49,8 @@ RSpec.describe QuestionsController, type: :controller do
 		context 'with valid attributes' do
 			it 'saves a new question to database' do
 				expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
+
+				# question.user_id == current_user
 			end
 
 			it 'redirects to show view' do
