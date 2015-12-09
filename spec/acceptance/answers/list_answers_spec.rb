@@ -6,8 +6,18 @@ feature 'Browse question with related answers', %q{
   I want to be able answers related to questions
 } do
   
-  given!(:question) { create(:question) }
+  given(:user) { create(:user) }
+  given!(:question) { create(:question, user: user) }
   given(:answer) { create(:answer, question: question) }
+  given(:questions) { create_list(:question, 2) }
+
+  scenario 'User browse questions list' do
+    visit questions_path
+
+    expect(page).to have_content 'Questions list'
+    expect(page).to have_content questions.first.title
+  end
+
 
   scenario 'User browse question with related answers' do
     visit question_path(question)

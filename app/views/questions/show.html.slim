@@ -1,19 +1,29 @@
-h4= @question.title
-p= @question.body
 
--if @question.answers.any?
-  h4 Answers
-  - @question.answers.each do |answer|
-    p.answer-body= answer.body
+/ - if user_signed_in? && current_user.author_of?(@question)
+- if current_user && current_user.id == @question.user_id
+  = link_to 'Delete question', question_path(@question.id), method: :delete
+  / , data: { confirm: 'Are tou sure?' }, class: 'btn btn-danger'
+/ container.content Text
+/ <container class="content">Text</container>
 
-h4 Your answer:
-= form_for [@question, @answer] do |f|
-  /- if @answer.errors.any?
-    ul
-      - @answer.errors.full_messages.each do |message|
-        li= message
-  p= f.text_area :body
-  p= f.submit 'Create Answer'
+#question
+  h4= @question.title
+  p= @question.body
+
+#answers
+  -if @question.answers.any?
+    h4 Answers
+    - @question.answers.each do |answer|
+      p.answer-body= answer.body
+
+  h4 Your answer:
+  = form_for [@question, @answer] do |f|
+    /- if @answer.errors.any?
+      ul
+        - @answer.errors.full_messages.each do |message|
+          li= message
+    p= f.text_area :body
+    p= f.submit 'Create Answer'
 
 
 = link_to 'Back', questions_path

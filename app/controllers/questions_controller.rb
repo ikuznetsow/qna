@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-	before_action :load_question, only: [:show]
+	before_action :load_question, only: [:show, :destroy]
 	before_action :authenticate_user!, except: [:index,:show]
 
 	def index
@@ -24,6 +24,17 @@ class QuestionsController < ApplicationController
 		else
 			render :new
 		end
+	end
+
+	def destroy
+		if @question.user_id == current_user.id
+      @question.destroy
+      flash[:success] = 'Your question was deleted.'
+	    redirect_to questions_path
+    else
+      flash[:notice] = "You haven't access for this action"
+			redirect_to @question
+    end
 	end
 
 	private

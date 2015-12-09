@@ -47,9 +47,9 @@ RSpec.describe QuestionsController, type: :controller do
 	describe 'POST #create' do
 		sign_in_user
 		context 'with valid attributes' do
+
 			it 'saves a new question to database' do
 				expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
-
 				# question.user_id == current_user
 			end
 
@@ -69,5 +69,21 @@ RSpec.describe QuestionsController, type: :controller do
 				expect(response).to render_template :new
 			end
 		end
+	end
+
+	describe 'DELETE #destroy' do
+	    sign_in_user
+			let!(:question) { create(:question, user: @user) }
+			let!(:other_user) { create(:other_user) }
+			let!(:others_question) { create(:question, user: other_user) }
+
+			it 'deletes own question' do
+	      expect { delete :destroy, id: question }.to change(@user.questions, :count).by(-1)
+			end
+
+      it 'should not delete others question' do
+        expect{ delete :destroy, id: others_question }.to_not change(Question, :count)
+      end
+    
 	end
 end
