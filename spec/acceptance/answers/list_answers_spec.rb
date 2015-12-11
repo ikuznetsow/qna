@@ -9,7 +9,7 @@ feature 'Browse question with related answers', %q{
   given(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given(:answer) { create(:answer, question: question) }
-  given(:questions) { create_list(:question, 2) }
+  given(:questions) { create_list(:question, 2, user: user) }
 
   scenario 'User browse questions list' do
     visit questions_path
