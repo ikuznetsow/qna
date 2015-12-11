@@ -22,7 +22,7 @@ RSpec.describe QuestionsController, type: :controller do
 
 		before { get :show, id: question }
 
-		it 'assigns requested questions to @question' do
+		it 'assigns requested question to @question' do
 			expect(assigns(:question)).to eq question	
 		end
 		
@@ -44,10 +44,45 @@ RSpec.describe QuestionsController, type: :controller do
 		end
 	end
 
+	describe 'GET #edit' do
+		sign_in_user
+		let(:question) { create(:question, user: @user) }
+
+		before { get :edit, id: question }
+
+		it 'assigns requested questions to @question' do
+			expect(assigns(:question)).to eq question	
+		end
+		
+		it 'renders edit view' do
+			expect(response).to render_template :edit
+		end
+	end
+
+	describe 'PATCH #update' do
+		sign_in_user
+		let(:question) { create(:question, user: @user) }
+
+		context 'with valid attributes' do
+      it 'changes question attributes' do
+        patch :update, id: question, question: { title: 'Updated title', body: 'Updated body' }
+        question.reload
+        expect(question.title).to eq 'Updated title'
+        expect(question.body).to eq 'Updated body'
+      end
+
+			it 'redirects to show view' do
+        patch :update, id: question, question: { title: 'Updated title', body: 'Updated body' }
+				expect(response).to redirect_to question_path(assigns(:question))
+			end
+		end
+		
+		context 'with invalid attributes'
+	end
+
 	describe 'POST #create' do
 		sign_in_user
 		context 'with valid attributes' do
-
 			it 'saves a new question to database' do
 				expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
 				# question.user_id == current_user
@@ -84,6 +119,5 @@ RSpec.describe QuestionsController, type: :controller do
       it 'should not delete others question' do
         expect{ delete :destroy, id: others_question }.to_not change(Question, :count)
       end
-    
 	end
 end

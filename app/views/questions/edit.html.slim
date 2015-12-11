@@ -1,0 +1,10 @@
+= form_for @question do |f|
+  .field
+    p= f.label :title
+    = f.text_field :title
+    p= f.label :body, 'Body'
+    = f.text_area :body
+  .actions
+    p= f.submit 'Save'
+
+= link_to 'Back', question_path(@question)
