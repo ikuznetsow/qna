@@ -62,8 +62,10 @@ RSpec.describe QuestionsController, type: :controller do
 	describe 'PATCH #update' do
 		sign_in_user
 		let(:question) { create(:question, user: @user) }
+		let(:other_user) { create(:other_user) }
+		let(:others_question) { create(:question, user: other_user) }
 
-		context 'with valid attributes' do
+		context 'own question with valid attributes' do
       it 'changes question attributes' do
         patch :update, id: question, question: { title: 'Updated title', body: 'Updated body' }
         question.reload
@@ -77,7 +79,20 @@ RSpec.describe QuestionsController, type: :controller do
 			end
 		end
 		
-		context 'with invalid attributes'
+		context 'own question with invalid attributes' do
+			it 'should not change question attributes' do
+        patch :update, id: question, question: { title: nil, body: 'Updated body' }
+        question.reload
+        expect(question.title).to eq question.title
+        expect(question.body).to eq question.body
+      end
+		end
+
+		it 'should not edit others question' do
+			patch :update, id: others_question, others_question: { title: 'Updated title', body: 'Updated body' }
+      expect(question.title).to_not eq 'Updated title'
+      expect(question.body).to_not eq 'Updated body'
+		end
 	end
 
 	describe 'POST #create' do

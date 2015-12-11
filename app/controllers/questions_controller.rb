@@ -31,9 +31,14 @@ class QuestionsController < ApplicationController
 	end
 
 	def update
-		@question.update(question_params)
-		flash[:success] = 'Your question successfully updated.'
-    redirect_to @question
+		if @question.user_id == current_user.id
+			@question.update(question_params)
+			flash[:success] = 'Your question successfully updated.'
+	    redirect_to @question
+		else
+			flash[:notice] = "You haven't access for this action"
+			redirect_to @question
+		end
 	end
 
 	def destroy
