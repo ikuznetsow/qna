@@ -20,7 +20,7 @@ class QuestionsController < ApplicationController
 
 	def create
 		@question = Question.new(question_params)
-		@question.user_id = current_user.id
+		@question.user = current_user
 
 		if @question.save 
 			flash[:success] = 'Your question successfully created.'
@@ -36,7 +36,7 @@ class QuestionsController < ApplicationController
 			flash[:success] = 'Your question successfully updated.'
 	    redirect_to @question
 		else
-			flash[:notice] = "You haven't access for this action"
+			flash[:notice] = "You haven't access for this action."
 			redirect_to @question
 		end
 	end
@@ -47,7 +47,7 @@ class QuestionsController < ApplicationController
       flash[:success] = 'Your question was deleted.'
 	    redirect_to questions_path
     else
-      flash[:notice] = "You haven't access for this action"
+      flash[:notice] = "You haven't access for this action."
 			redirect_to @question
     end
 	end
