@@ -24,6 +24,10 @@ feature 'Edit questions' do
     sign_in(other_user)
     visit question_path(question)
     expect(page).to_not have_link 'Edit question'
+  end  
+  
+  scenario 'Non-authenticated user trying to edit question' do
+    visit question_path(question)
+    expect(page).to_not have_link 'Edit question'
   end
-
 end

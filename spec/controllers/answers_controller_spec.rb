@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:user) { create(:user) }
-  let(:question) { create(:question, user: user) } 
-  let(:answer) { create(:answer, question: question) }
   
   describe 'POST #create' do
+    sign_in_user
+    let(:question) { create(:question, user: @user) } 
+    let!(:answer) { create(:answer, question: question, user: @user) }
+    
     context 'with valid attributes' do
       it 'saves a new answer to database' do
         expect {
@@ -28,6 +29,21 @@ RSpec.describe AnswersController, type: :controller do
         post :create, question_id: question, answer: attributes_for(:invalid_answer)
         expect(response).to redirect_to question_path(assigns(:question))
       end
+    end
+  end
+
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+    let(:question) { create(:question, user: @user) } 
+    let!(:answer) { create(:answer, question: question, user: @user) }
+    # let(:foreign_answer) { create(:answer, question: question) }
+    # let!(:other_user) { create(:other_user) }
+    # let!(:others_question) { create(:question, user: other_user) }
+
+    it 'deletes own question' do
+      expect { delete :destroy, question_id: answer.question_id, id: answer.id }.to change(Answer, :count).by(-1)
+      # if question.answers.count changed
     end
   end
 end

@@ -11,11 +11,8 @@ html
       .alert.alert-success = flash[:success]
     - if flash[:notice]
       .alert.alert-warning = flash[:notice]
-    - if alert
-      .alert.alert-danger = alert
-
-      | <p class="alert alert-info">#{alert}</p>
-      | <p class="notice">#{notice}</p>
+    - if flash[:alert]
+      .alert.alert-danger = flash[:alert]
 
     nav class='navbar navbar-default navbar-static-top'
       .container-fluid
@@ -34,4 +31,4 @@ html
 
     .container = yield  
 
-    / http://www.w3schools.com/bootstrap/
+    / http://www.tutorialspoint.com/bootstrap/

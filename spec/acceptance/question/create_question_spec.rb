@@ -8,7 +8,6 @@ feature 'Create question', %q{
   
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
-  given!(:questions) { create_list(:question, 2, user: user) }
 
   scenario 'Non-authenticated user trying to create question' do
     visit questions_path
@@ -21,10 +20,12 @@ feature 'Create question', %q{
     sign_in(user)
     visit questions_path
     click_on 'Ask question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'Test text'
+    fill_in 'Title', with: question.title
+    fill_in 'Body', with: question.body
     click_on 'Create'
 
-    expect(page).to have_content 'Your question successfully created.'
+    expect(page).to have_content 'Your question successfully created'
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
   end
 end

@@ -99,8 +99,7 @@ RSpec.describe QuestionsController, type: :controller do
 		sign_in_user
 		context 'with valid attributes' do
 			it 'saves a new question to database' do
-				expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
-				# question.user_id == current_user
+				expect{ post :create, question: attributes_for(:question) }.to change(@user.questions, :count).by(1)
 			end
 
 			it 'redirects to show view' do

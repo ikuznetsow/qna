@@ -1,16 +1,28 @@
 class AnswersController < ApplicationController
-
-  before_action :load_question, only: [:create]
+  before_action :authenticate_user!
+  before_action :load_question, only: [:create, :destroy]
 
   def create
     @answer = @question.answers.build(answer_params)
+    @answer.user = current_user
 
     if @answer.save
-      redirect_to @question, notice: 'You answer was successfully created.'
+      flash[:success] = 'You answer was successfully created.'
     else
       flash[:notice] = 'Please fill in answer body.'
-      redirect_to @question
     end
+    redirect_to @question
+  end
+
+  def destroy
+    @answer = @question.answers.find(params[:id])
+    if current_user.author_of?(@answer)
+      @answer.destroy
+      flash[:success] = 'Your answer was deleted.'
+    else
+      flash[:notice] = "You haven't access for this action."
+    end
+    redirect_to @question
   end
 
   private
