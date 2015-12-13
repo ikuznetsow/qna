@@ -37,13 +37,16 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
     let(:question) { create(:question, user: @user) } 
     let!(:answer) { create(:answer, question: question, user: @user) }
-    # let(:foreign_answer) { create(:answer, question: question) }
-    # let!(:other_user) { create(:other_user) }
-    # let!(:others_question) { create(:question, user: other_user) }
+    let(:other_user) { create(:other_user) }
+    let(:other_answer) { create(:answer, question: question, user: other_user) }
 
     it 'deletes own question' do
       expect { delete :destroy, question_id: answer.question_id, id: answer.id }.to change(Answer, :count).by(-1)
       # if question.answers.count changed
+    end
+
+    it 'should not delete others answers' do
+      expect{ delete :destroy, question_id: other_answer.question_id, id: other_answer.id }.to_not change(Question, :count)
     end
   end
 end

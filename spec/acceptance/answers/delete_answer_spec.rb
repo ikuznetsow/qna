@@ -22,8 +22,9 @@ feature 'Delete answers' do
     sign_in(user)
     visit question_path(question)
     click_on 'Delete answer'
+
     expect(page).to have_content 'Your answer was deleted'
-    # expect(page).to_not have_selector ("div#answer-id-#{answer.id}")
-    # expect(page).to_not have_content answer.body
+    expect(page).to_not have_selector ("div#answer_#{answer.id}")
+    expect(page).to_not have_content answer.body
   end
 end
