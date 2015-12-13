@@ -11,13 +11,13 @@ feature 'Edit questions' do
     visit question_path(question)
     click_on 'Edit question'
       fill_in 'Title', with: 'Updated title'
-      fill_in 'Body', with: 'Updatd body'
-      click_on 'Save'
+      fill_in 'Body', with: 'Updated body'
+      click_on 'Save question'
     expect(page).to have_content 'Your question successfully updated'
     expect(page).to_not have_content question.title
     expect(page).to_not have_content question.body
     expect(page).to have_content 'Updated title'
-    expect(page).to have_content 'Updatd body'
+    expect(page).to have_content 'Updated body'
   end
 
   scenario 'Authenticated user trying to edit others question' do

@@ -18,5 +18,14 @@ feature 'Edit answers' do
     expect(page).to_not have_link 'Edit answer'
   end
 
-  scenario  'Authenticated user edits own answers'
+  scenario  'Authenticated user edits own answers' do
+    sign_in(user)
+    visit question_path(question)
+    click_on 'Edit answer'
+      fill_in 'Body', with: 'Updated body'
+      click_on 'Save answer'
+    expect(page).to have_content 'Your answer was successfully updated'
+    expect(page).to_not have_content answer.body
+    expect(page).to have_content 'Updated body'
+  end
 end

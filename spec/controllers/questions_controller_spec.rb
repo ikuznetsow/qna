@@ -88,10 +88,12 @@ RSpec.describe QuestionsController, type: :controller do
       end
 		end
 
-		it 'should not edit others question' do
-			patch :update, id: others_question, others_question: { title: 'Updated title', body: 'Updated body' }
-      expect(question.title).to_not eq 'Updated title'
-      expect(question.body).to_not eq 'Updated body'
+		context 'others questions'
+			it 'should not be edited' do
+				patch :update, id: others_question, others_question: { title: 'Updated title', body: 'Updated body' }
+	      expect(question.title).to_not eq 'Updated title'
+	      expect(question.body).to_not eq 'Updated body'
+			end
 		end
 	end
 

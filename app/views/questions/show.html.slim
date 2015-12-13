@@ -25,10 +25,6 @@
 
 .row
   = form_for [@question, @answer] do |f|
-    /- if @answer.errors.any?
-      ul
-        - @answer.errors.full_messages.each do |message|
-          li= message
     .field
       p= f.label :body, 'Your answer'
       p= f.text_area :body
