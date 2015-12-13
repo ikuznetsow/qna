@@ -22,7 +22,7 @@ feature 'Edit answers' do
     sign_in(user)
     visit question_path(question)
     click_on 'Edit answer'
-      fill_in 'Body', with: 'Updated body'
+      fill_in 'Your answer', with: 'Updated body'
       click_on 'Save answer'
     expect(page).to have_content 'Your answer was successfully updated'
     expect(page).to_not have_content answer.body

@@ -21,7 +21,7 @@
           - if current_user && current_user.author_of?(answer)
             .btn-group role="group" aria-label="edit-delete" 
               = link_to 'Edit answer', edit_question_answer_path(@question.id,answer.id), method: :get, class: 'btn btn-default'
-              = link_to 'Delete answer', question_answer_path(@question.id,answer.id), method: :delete, class: 'btn btn-danger', data: { confirm: 'You going to delete the answer?' }
+              = link_to 'Delete answer', question_answer_path(@question.id,answer.id), method: :delete, class: 'btn btn-danger'
 
 .row
   = form_for [@question, @answer] do |f|

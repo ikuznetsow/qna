@@ -88,17 +88,16 @@ RSpec.describe QuestionsController, type: :controller do
       end
 		end
 
-		context 'others questions'
-			it 'should not be edited' do
-				patch :update, id: others_question, others_question: { title: 'Updated title', body: 'Updated body' }
-	      expect(question.title).to_not eq 'Updated title'
-	      expect(question.body).to_not eq 'Updated body'
-			end
+		it 'should not edit others questions' do
+			patch :update, id: others_question, others_question: { title: 'Updated title', body: 'Updated body' }
+      expect(question.title).to_not eq 'Updated title'
+      expect(question.body).to_not eq 'Updated body'
 		end
 	end
 
 	describe 'POST #create' do
 		sign_in_user
+		
 		context 'with valid attributes' do
 			it 'saves a new question to database' do
 				expect{ post :create, question: attributes_for(:question) }.to change(@user.questions, :count).by(1)
@@ -123,17 +122,17 @@ RSpec.describe QuestionsController, type: :controller do
 	end
 
 	describe 'DELETE #destroy' do
-	    sign_in_user
-			let!(:question) { create(:question, user: @user) }
-			let!(:other_user) { create(:other_user) }
-			let!(:others_question) { create(:question, user: other_user) }
+    sign_in_user
+		let!(:question) { create(:question, user: @user) }
+		let!(:other_user) { create(:other_user) }
+		let!(:others_question) { create(:question, user: other_user) }
 
-			it 'deletes own question' do
-	      expect { delete :destroy, id: question }.to change(@user.questions, :count).by(-1)
-			end
+		it 'deletes own question' do
+      expect { delete :destroy, id: question }.to change(@user.questions, :count).by(-1)
+		end
 
-      it 'should not delete others question' do
-        expect{ delete :destroy, id: others_question }.to_not change(Question, :count)
-      end
+    it 'should not delete others question' do
+      expect{ delete :destroy, id: others_question }.to_not change(Question, :count)
+    end
 	end
 end
