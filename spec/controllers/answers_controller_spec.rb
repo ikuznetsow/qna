@@ -11,7 +11,11 @@ RSpec.describe AnswersController, type: :controller do
       it 'saves a new answer to database' do
         expect {
          post :create, question_id: question, answer: attributes_for(:answer) 
-         }.to change(question.answers, :count).by(1)
+         }.to change(question.answers, :count).by(1) 
+      end
+      it 'saved answer related to current user' do
+        post :create, question_id: question, answer: attributes_for(:answer) 
+        expect(question.answers.last.user_id).to eq @user.id                    #to review
       end
       it 'redirects to question show view' do
         post :create, question_id: question, answer: attributes_for(:answer)

@@ -10,8 +10,8 @@ feature 'Browse answers for question' do
     
     expect(page).to have_content question.title
     expect(page).to have_content question.body
-    expect(page).to have_content answers[0].body
-    expect(page).to have_content answers[1].body
-    expect(page).to have_content answers[2].body
+    answers.each do |a|
+      expect(page).to have_content a.body
+    end
   end
 end
