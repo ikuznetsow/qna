@@ -1,9 +1,6 @@
 = form_for @question do |f|
   p= f.label :title
   = f.text_field :title
-  p= f.label :body, 'Text'
+  p= f.label :body, 'Body'
   = f.text_area :body
   p= f.submit 'Create'
-
-
-= link_to 'Back', questions_path
