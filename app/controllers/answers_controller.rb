@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
     else
       flash[:notice] = 'Please fill in answer body.'
     end
-    redirect_to @question
+    # redirect_to @question
   end
 
   def update

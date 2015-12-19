@@ -48,6 +48,8 @@ group :test do
 	gem 'shoulda-matchers', '~> 3.0'
   gem 'capybara'
   gem 'launchy'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :development do
