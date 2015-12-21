@@ -22,8 +22,9 @@ html
             - if current_user
               li = link_to 'Log out', destroy_user_session_path, method: :delete
             - else
-              <!-- li = link_to 'Log in', new_user_session_path -->
-              <!-- li = link_to 'Sign up', new_user_registration_path -->
+              -unless current_page?('/users/sign_in') or current_page?('/users/sign_up')
+                li = link_to 'Log in', new_user_session_path 
+                li = link_to 'Sign up', new_user_registration_path
 
     .container = yield  
 
