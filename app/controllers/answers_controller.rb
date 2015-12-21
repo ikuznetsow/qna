@@ -10,13 +10,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
-
-    if @answer.save
-      flash[:success] = 'You answer was successfully created.'
-    else
-      flash[:notice] = 'Please fill in answer body.'
-    end
-    # redirect_to @question
+    @answer.save
   end
 
   def update

@@ -7,12 +7,8 @@ html
     = csrf_meta_tags
 
   body
-    - if flash[:success]
-      .alert.alert-success = flash[:success]
-    - if flash[:notice]
-      .alert.alert-warning = flash[:notice]
-    - if flash[:alert]
-      .alert.alert-danger = flash[:alert]
+    #flashes
+      = render 'layouts/flashes'
 
     nav class='navbar navbar-default navbar-static-top'
       .container-fluid
