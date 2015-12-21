@@ -11,18 +11,19 @@ html
       = render 'layouts/flashes'
 
     nav.navbar.navbar-default.navbar-static-top
-      .navbar-header
-        = link_to('QnA', root_path, class: 'navbar-brand')
-      .navbar-collapse.collapse#navbar
-        ul.nav.navbar-nav
-          li = link_to 'All Questions', root_path
-          li = link_to 'Create Question', new_question_path
-        ul.nav.navbar-nav.navbar-right
-          - if current_user
-            li = link_to 'Log out', destroy_user_session_path, method: :delete
-          - else
-            <!-- li = link_to 'Log in', new_user_session_path -->
-            <!-- li = link_to 'Sign up', new_user_registration_path -->
+      .container-fluid
+        .navbar-header
+          = link_to('QnA', root_path, class: 'navbar-brand')
+        .navbar-collapse.collapse#navbar
+          ul.nav.navbar-nav
+            li = link_to 'All Questions', root_path
+            li = link_to 'Create Question', new_question_path
+          ul.nav.navbar-nav.navbar-right
+            - if current_user
+              li = link_to 'Log out', destroy_user_session_path, method: :delete
+            - else
+              <!-- li = link_to 'Log in', new_user_session_path -->
+              <!-- li = link_to 'Sign up', new_user_registration_path -->
 
     .container = yield  
 

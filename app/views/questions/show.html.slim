@@ -6,14 +6,12 @@
     .panel-body
       p= @question.body
       - if current_user && current_user.author_of?(@question)
-        .btn-group role="group" aria-label="edit-delete" 
+        .btn-group role='group' aria-label='edit-delete' 
           = link_to 'Edit question', edit_question_path(@question.id), method: :get, class: 'btn btn-default'
           = link_to 'Delete question', question_path(@question.id), method: :delete, class: 'btn btn-danger', data: { confirm: 'You going to delete the question?' }
     
 .row.answers class="#{'hidden' unless @question.answers.any?}" 
-  h4 
-    =@question.answers.count 
-    |  answers
+  h4 #{@question.answers.count} answers
   = render @question.answers
 
 .row
