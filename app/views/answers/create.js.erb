@@ -1,0 +1,9 @@
+<% if @answer.persisted? %>   //if @answer.save  ? which is the right way to validate saved
+  $('.answers').append('<%= j render @answer %>');
+  $('#flashes').html("<div class='alert alert-success'>You answer was successfully created.</div>");
+  $('#answer_body').val('');
+<% else %>
+  $('#flashes').html("<div class='alert alert-warning'><%= @answer.errors.full_messages.to_sentence %></div>");
+<% end %>
+  // might be better to assign flash: then 
+  // $('#flashes').html('<%= j render 'layouts/flashes' %>');

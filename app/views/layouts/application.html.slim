@@ -2,33 +2,30 @@ doctype html
 html
   head
     title QnA
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
 
   body
-    - if flash[:success]
-      .alert.alert-success = flash[:success]
-    - if flash[:notice]
-      .alert.alert-warning = flash[:notice]
-    - if flash[:alert]
-      .alert.alert-danger = flash[:alert]
+    #flashes
+      = render 'layouts/flashes'
 
-    nav class='navbar navbar-default navbar-static-top'
+    nav.navbar.navbar-default.navbar-static-top
       .container-fluid
         .navbar-header
-          = link_to('QnA', root_path, :class => 'navbar-brand')
-        #navbar class='navbar-collapse collapse'
-          ul class='nav navbar-nav'
+          = link_to 'QnA', root_path, class: 'navbar-brand'
+        .navbar-collapse.collapse#navbar
+          ul.nav.navbar-nav
             li = link_to 'All Questions', root_path
             li = link_to 'Create Question', new_question_path
-          ul class='nav navbar-nav navbar-right'
+          ul.nav.navbar-nav.navbar-right
             - if current_user
               li = link_to 'Log out', destroy_user_session_path, method: :delete
-            - else
-              <!-- li = link_to 'Log in', new_user_session_path -->
-              <!-- li = link_to 'Sign up', new_user_registration_path -->
+            - elsif !current_page?('/users/sign_in') and !current_page?('/users/sign_up')
+                li = link_to 'Log in', new_user_session_path 
+                li = link_to 'Sign up', new_user_registration_path
+                /<li><%= link_to_unless_current("Home", { action: "index" }) %></li>
 
     .container = yield  
 
-    / http://www.tutorialspoint.com/bootstrap/
+/ http://www.tutorialspoint.com/bootstrap/

@@ -1,0 +1,6 @@
+div.answer id="answer-#{answer.id}"
+  p.answer-body = answer.body
+  - if current_user && current_user.author_of?(answer)
+    .btn-group role='group' aria-label='edit-delete' 
+      = link_to 'Edit answer', edit_question_answer_path(@question.id,answer.id), method: :get, class: 'btn btn-default'
+      = link_to 'Delete answer', question_answer_path(@question.id,answer.id), method: :delete, class: 'btn btn-danger'
