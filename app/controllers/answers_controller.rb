@@ -1,26 +1,34 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_question, only: [:create, :destroy, :edit, :update]
   before_action :load_answer, only: [:edit, :update]
+  before_action :load_question, only: [:create, :destroy, :edit, :update]
 
   def edit
 
   end
 
   def create
+    # POST   /questions/:question_id/answers(.:format)   answers#create
+    # http://stackoverflow.com/questions/10124832/how-can-i-elegantly-handle-devises-401-status-in-ajax
+    
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
     @answer.save
+    # respond_to do |format|
+    #   if @answer.save
+    #     format.html { redirect_to @question, notice: 'Your answer was successfully created.' }
+    #     
+    #   else
+    #     format.html { render @question, notice: @answer.errors.full_messages.to_sentence }
+    #     format.json { render json: @answer.errors } #, status: :unprocessable_answer
+    #   end
+    # end
   end
 
   def update
     if current_user.author_of?(@answer)
       @answer.update(answer_params)
-      flash[:success] = 'Your answer was successfully updated.'
-    else
-      flash[:notice] = "You haven't access for this action."
     end
-    redirect_to @question
   end
 
   def destroy

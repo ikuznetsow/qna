@@ -1,8 +1,0 @@
-= form_for [@question, @answer] do |f|
-  .field
-    p= f.label :body, 'Your answer'
-    p= f.text_area :body
-  .actions
-    p= f.submit 'Save answer', class: 'btn btn-primary'
-
-= link_to 'Back', question_path(@question)

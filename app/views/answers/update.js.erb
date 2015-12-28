@@ -1,0 +1,18 @@
+<% if @answer.errors.any? %> 
+  <% @answer.errors.full_messages.each do |message| %>
+    $('#flashes').html("<div class='alert alert-warning'><%= j message %></div>");
+  <% end %>
+<% else %>
+  $('#flashes').html("<div class='alert alert-success'>Your answer was successfully updated.</div>");
+  $('.answers').html('<%= j render @question.answers %>');
+  $('.edit-answer-form').addClass('hide');
+  $('.edit-answer-link').click(function(e) {
+    e.preventDefault();
+    $(this).hide();
+    answer_id = $(this).data('answerId');
+    $('form#edit-answer-'+answer_id).show();
+  });
+  //<% if @answer.persisted? %>
+    // $('#flashes').html("<div class='alert alert-success'>You answer was successfully created.</div>");
+  //<% end %>
+<% end %>

@@ -1,9 +1,11 @@
-<% if @answer.persisted? %>   //if @answer.save  ? which is the right way to validate saved
-  $('.answers').append('<%= j render @answer %>');
-  $('#flashes').html("<div class='alert alert-success'>You answer was successfully created.</div>");
-  $('#answer_body').val('');
+<% if @answer.errors.any? %> 
+  <% @answer.errors.full_messages.each do |message| %>
+    $('#flashes').html("<div class='alert alert-warning'><%= j message %></div>");
+  <% end %>
 <% else %>
-  $('#flashes').html("<div class='alert alert-warning'><%= @answer.errors.full_messages.to_sentence %></div>");
+  <% if @answer.persisted? %>
+    $('#flashes').html("<div class='alert alert-success'>You answer was successfully created.</div>");
+    $('.answers').append('<%= j render @answer %>');
+    $('#answer_body').val('');
+  <% end %>
 <% end %>
-  // might be better to assign flash: then 
-  // $('#flashes').html('<%= j render 'layouts/flashes' %>');
