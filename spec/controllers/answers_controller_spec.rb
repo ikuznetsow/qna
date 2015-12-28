@@ -59,7 +59,9 @@ RSpec.describe AnswersController, type: :controller do
       patch :update, id: answer, question_id: answer.question, answer: attributes_for(:answer), format: :js
       expect(response).to render_template :update
     end
-    # context 'own answer with valid attributes' do
+
+    context 'own answer with valid attributes'
+    # do
     #   it 'changes answer attributes' do
     #     patch :update, question_id: answer.question_id, id: answer.id, answer: { body: 'Updated body' }
     #     answer.reload

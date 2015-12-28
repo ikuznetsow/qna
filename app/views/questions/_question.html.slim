@@ -1,25 +1,11 @@
-  .panel.panel-default
-    .panel-heading 
-      h4= @question.title
-    .panel-body
-      p= @question.body
-      - if user_signed_in? && current_user.author_of?(@question)
-        .btn-group role='group' aria-label='edit-delete' 
-          = link_to 'Delete question', question_path(@question.id), method: :delete, class: 'btn btn-danger', data: { confirm: 'You going to delete the question?' }
-          = link_to 'Edit question', '', remote: true, class: 'btn btn-default'
-
-        = render partial: 'form'
-        / = render partial: 'form', locals: { submit_text: 'Save', remote: true }
-
-      / p class='pull-right' = link_to 'Edit question', '', class: 'btn edit-question-link', data: { question_id: @question.id }
-
-      / = form_for [@question], remote: true, html: { id: "edit-question-#{@question.id}", class: "hide edit-question-form"} do |f|
-      /   .has-error.question-errors
-      /   div class="form-group"
-      /     = f.label :title
-      /     = f.text_field :title, class: "form-control"
-      /   div class="form-group"
-      /     = f.label :body
-      /     = f.text_area :body, class: "form-control", rows: 6
-      /     br
-      /     = f.submit 'Save', class: "btn btn-success"
+h4= @question.title
+p= @question.body
+- if user_signed_in? && current_user.author_of?(@question)
+  = link_to 'Delete question', question_path(@question.id), method: :delete, data: { confirm: 'You going to delete the question?' }
+  = link_to 'Edit question', '', class: 'edit-question-link'
+  = form_for [@question], remote: true, html: { id: "edit-question-form" } do |f| 
+    = f.label :title
+    = f.text_field :title
+    = f.label :body
+    = f.text_area :body
+    = f.submit 'Save question'
