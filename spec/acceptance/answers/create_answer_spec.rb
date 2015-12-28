@@ -11,7 +11,7 @@ feature 'Create answer' do
     fill_in 'Your answer', with: answer.body
     click_on 'Create Answer'
 
-    expect(page).to have_content 'You need to sign in'
+    expect(page).to have_content 'You need to sign in' 
   end
 
   scenario 'Authenticated user creates answer with valid params', js: true do
