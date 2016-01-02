@@ -3,16 +3,11 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: [:edit, :update]
   before_action :load_question, only: [:create, :destroy, :edit, :update]
 
-  def edit
-
-  end
-
   def create
     # POST   /questions/:question_id/answers(.:format)   answers#create
     # http://stackoverflow.com/questions/10124832/how-can-i-elegantly-handle-devises-401-status-in-ajax
-    
-    @answer = @question.answers.build(answer_params)
-    @answer.user = current_user
+
+    @answer = @question.answers.build(answer_params.merge(user: current_user))
     @answer.save
     # respond_to do |format|
     #   if @answer.save
@@ -26,9 +21,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(@answer)
-      @answer.update(answer_params)
-    end
+    @answer.update(answer_params) if current_user.author_of?(@answer)
   end
 
   def destroy

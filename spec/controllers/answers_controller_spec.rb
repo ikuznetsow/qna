@@ -37,37 +37,44 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    sign_in_user
-    let!(:question) { create(:question) } 
-    let!(:answer) { create(:answer, question: question, user: @user) }
-    # let(:other_user) { create(:other_user) }
-    let(:other_answer) { create(:answer, question: question, user: other_user) }
 
-    it 'assigns the requested answer to @answer' do
-      patch :update, id: answer, question_id: answer.question, answer: attributes_for(:answer), format: :js
-      expect(assigns(:answer)).to eq answer
-      expect(assigns(:question)).to eq question
+
+    context 'sign_in_user' do
+      sign_in_user
+      let!(:question) { create(:question) } 
+      let!(:answer) { create(:answer, question: question, user: @user) }
+
+      it 'assigns the requested answer to @answer' do
+        patch :update, id: answer, question_id: answer.question, answer: attributes_for(:answer), format: :js
+        expect(assigns(:answer)).to eq answer
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes answer attributes' do
+        patch :update, id: answer, question_id: answer.question, answer: { body: 'new body' }, format: :js
+        answer.reload
+        expect(answer.body).to eq 'new body'
+      end
+
+      it 'render update template' do
+        patch :update, id: answer, question_id: answer.question, answer: attributes_for(:answer), format: :js
+        expect(response).to render_template :update
+      end
+
+      context 'own answer with invalid attributes'
     end
 
-    it 'changes answer attributes' do
-      patch :update, id: answer, question_id: answer.question, answer: { body: 'new body' }, format: :js
-      answer.reload
-      expect(answer.body).to eq 'new body'
-    end
+    context 'other_user' do
+      sign_in_user
+      let!(:answer) { create(:answer) }
+    
+      it 'should not edit others answers' do
+        patch :update, id: answer, question_id: answer.question, answer: { body: 'new body' }, format: :js
 
-    it 'render update template' do
-      patch :update, id: answer, question_id: answer.question, answer: attributes_for(:answer), format: :js
-      expect(response).to render_template :update
+        answer.reload
+        expect(answer.body).to_not eq 'new body'
+      end
     end
-
-    context 'own answer with valid attributes'
-    # do
-    #   it 'changes answer attributes' do
-    #     patch :update, question_id: answer.question_id, id: answer.id, answer: { body: 'Updated body' }
-    #     answer.reload
-    #     expect(answer.body).to eq 'Updated body'
-    #   end
-    # end
   end
 
   describe 'DELETE #destroy' do
