@@ -9,4 +9,14 @@ $ ->
     answer_id = $(this).data('answerId')
     $('form#edit-answer-'+answer_id).show()
 
-    
+  $(document).ajaxError (e, xhr, settings) ->
+    if xhr.status == 401
+      $('#flashes').html("<div class='alert alert-warning'>#{ xhr.responseText }</div>")
+      # flash[:notice] = xhr.responseText
+      window.location.replace('/users/sign_in')
+
+  #// $(document).bind 'ajax:error', (event, jqXHR, ajaxSettings, thrownError) ->
+  #//   if jqXHR.status == 401
+  #//     window.location.replace('/users/sign_in')
+  #//     $('#flashes').html("<div class='alert alert-warning'>You need to sign in.</div>")
+

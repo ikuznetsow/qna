@@ -4,20 +4,8 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:create, :destroy, :update, :set_best]
 
   def create
-    # POST   /questions/:question_id/answers(.:format)   answers#create
-    # http://stackoverflow.com/questions/10124832/how-can-i-elegantly-handle-devises-401-status-in-ajax
-
     @answer = @question.answers.build(answer_params.merge(user: current_user))
     @answer.save
-    # respond_to do |format|
-    #   if @answer.save
-    #     format.html { redirect_to @question, notice: 'Your answer was successfully created.' }
-    #     
-    #   else
-    #     format.html { render @question, notice: @answer.errors.full_messages.to_sentence }
-    #     format.json { render json: @answer.errors } #, status: :unprocessable_answer
-    #   end
-    # end
   end
 
   def update
@@ -34,13 +22,7 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = @question.answers.find(params[:id])
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      flash[:success] = 'Your answer was deleted.'
-    else
-      flash[:notice] = "You haven't access for this action."
-    end
-    redirect_to @question
+    @answer.destroy if current_user.author_of?(@answer)
   end
 
   private

@@ -11,7 +11,8 @@ feature 'Create answer' do
     fill_in 'Your answer', with: answer.body
     click_on 'Create Answer'
 
-    expect(page).to have_content 'You need to sign in' 
+    expect(page).to have_content 'You need to sign in'
+    expect(current_path).to eq new_user_session_path
   end
 
   scenario 'Authenticated user creates answer with valid params', js: true do
@@ -22,7 +23,7 @@ feature 'Create answer' do
     
     expect(current_path).to eq question_path(question)
     expect(page).to have_content answer.body
-    # expect(page).to have_content 'You answer was successfully created'
+    expect(page).to have_content 'You answer was successfully created'
   end 
 
   scenario 'Authenticated user creates answer with invalid params', js: true do

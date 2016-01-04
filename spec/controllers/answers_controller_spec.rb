@@ -119,11 +119,11 @@ RSpec.describe AnswersController, type: :controller do
     let!(:other_answer) { create(:answer, question: question, user: other_user) }
 
     it 'deletes own question' do
-      expect { delete :destroy, question_id: answer.question_id, id: answer.id }.to change(question.answers, :count).by(-1)
+      expect { delete :destroy, question_id: answer.question_id, id: answer.id, format: :js }.to change(question.answers, :count).by(-1)
     end
 
     it 'should not delete others answers' do
-      expect { delete :destroy, question_id: other_answer.question_id, id: other_answer.id }.
+      expect { delete :destroy, question_id: other_answer.question_id, id: other_answer.id, format: :js }.
         to_not change(Answer, :count)
     end
   end
