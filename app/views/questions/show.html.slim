@@ -2,15 +2,12 @@
   = render @question
     
 .answers class="#{'hidden' unless @question.answers.any?}" 
-  h4 #{@question.answers.count} answers
   = render @question.answers
 
 .nav
   = form_for [@question, @answer], remote: true do |f|
-    .field
       p= f.label :body, 'Your answer'
       p= f.text_area :body
-    .actions
       p= f.submit 'Create Answer', class: 'btn btn-primary'
 
 = link_to 'Back', questions_path

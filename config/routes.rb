@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   resources :questions do
-    resources :answers 
+    resources :answers do
+      patch :set_best
+    end
   end
 
   # Example of regular route:

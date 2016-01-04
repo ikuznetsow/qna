@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_answer, only: [:edit, :update]
-  before_action :load_question, only: [:create, :destroy, :edit, :update]
+  before_action :load_answer, only: [:update]
+  before_action :load_question, only: [:create, :destroy, :update, :set_best]
 
   def create
     # POST   /questions/:question_id/answers(.:format)   answers#create
@@ -22,6 +22,13 @@ class AnswersController < ApplicationController
 
   def update
     @answer.update(answer_params) if current_user.author_of?(@answer)
+  end
+
+  def set_best
+    # if current_user.author_of?(@answer)
+      @answer = @question.answers.find(params[:answer_id])
+      @question.answers.update_all(is_best: false)
+      @answer.update(is_best: true)
   end
 
   def destroy

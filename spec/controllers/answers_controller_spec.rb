@@ -36,8 +36,34 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'PATCH #update' do
+  describe 'PATCH #set_best' do
 
+    context 'sign_in_user' do
+      sign_in_user
+      let!(:question) { create(:question, user: @user) } 
+      let!(:answer) { create(:answer, question: question) }
+
+      it 'assigns the requested answer to @answer' do
+        patch :set_best, answer_id: answer, question_id: answer.question, format: :js
+        expect(assigns(:answer)).to eq answer
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes answer set_best attribute' do
+        patch :set_best, answer_id: answer, question_id: answer.question, format: :js
+        answer.reload
+        expect(answer.is_best).to eq true
+      end
+
+      it 'render set_best template' do
+        patch :set_best, answer_id: answer, question_id: answer.question, format: :js
+        answer.reload
+        expect(response).to render_template :set_best
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
 
     context 'sign_in_user' do
       sign_in_user
