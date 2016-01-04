@@ -8,9 +8,10 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   resources :questions do
-    resources :answers do
-      patch :set_best
-    end
+    resources :answers
+    patch 'answers/:id/set_best(.:format)' => 'answers#set_best', as: 'answer_set_best'
+      # patch :set_best
+    
   end
 
   # Example of regular route:
