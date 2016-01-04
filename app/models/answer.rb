@@ -4,6 +4,6 @@ class Answer < ActiveRecord::Base
 	
   validates :user_id, :question_id, :body, presence: true
 
-  default_scope { order is_best: :desc }
+  default_scope { order(is_best: :desc).order(created_at: :asc) }
 
 end

@@ -25,10 +25,11 @@ class AnswersController < ApplicationController
   end
 
   def set_best
-    # if current_user.author_of?(@answer)
+    if current_user.author_of?(@question)
       @answer = @question.answers.find(params[:answer_id])
       @question.answers.update_all(is_best: false)
       @answer.update(is_best: true)
+    end
   end
 
   def destroy

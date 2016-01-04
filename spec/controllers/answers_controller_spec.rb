@@ -40,8 +40,10 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'sign_in_user' do
       sign_in_user
-      let!(:question) { create(:question, user: @user) } 
+      let!(:question) { create(:question, user: @user) }
       let!(:answer) { create(:answer, question: question) }
+      # let(:other_question) { create(:question) }
+      let(:other_answer) { create(:answer) }
 
       it 'assigns the requested answer to @answer' do
         patch :set_best, answer_id: answer, question_id: answer.question, format: :js
@@ -60,6 +62,12 @@ RSpec.describe AnswersController, type: :controller do
         answer.reload
         expect(response).to render_template :set_best
       end
+
+      it 'should not select best answer for others question' do
+        patch :set_best, answer_id: other_answer, question_id: other_answer.question, format: :js
+        other_answer.reload
+        expect(other_answer.is_best).to eq false
+      end   
     end
   end
 
