@@ -8,7 +8,7 @@ feature 'Select best answer', %q{
   
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
-  given!(:answers) { create_list(:answer, 2, question: question) }
+  given!(:answers) { create_list(:answer, 3, question: question) }
   given(:other_user) { create(:user) }
 
   scenario 'Non-authenticated user trying to select best answer' do
@@ -27,7 +27,7 @@ feature 'Select best answer', %q{
       end
     end
 
-    scenario 'set best answer for own question', js: true do
+    scenario 'set best answer for own question and shown first', js: true do
       sign_in(user)
       visit question_path(question)
       within "#answer-#{answers.first.id}" do          
@@ -36,7 +36,22 @@ feature 'Select best answer', %q{
         expect(page).to_not have_link 'Set best'
         expect(page).to have_content 'Best answer'
       end
+      expect(page.find(:xpath, '(//div[@class="answers"]/div)[1]')).to have_content 'Best answer'
       expect(page).to have_content "Best answer has been set"
+    end
+
+    scenario 'set best answer for antoher own question', js: true do
+      sign_in(user)
+      visit question_path(question)
+      within "#answer-#{answers.first.id}" do          
+        click_on 'Set best'
+      end
+      within "#answer-#{answers.second.id}" do          
+        click_on 'Set best'
+      end
+      within '.answers' do
+        expect(page).to have_content('Best answer', count: 1)
+      end
     end
   end
 end
