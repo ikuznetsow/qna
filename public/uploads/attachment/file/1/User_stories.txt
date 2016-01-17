@@ -1,0 +1,15 @@
+https://www.youtube.com/watch?v=S2BVOvl4rOw
+
+
+tend to write a single story in three parts:
+1. the title, 2. the “As a…I want to…because…” clause 3. “Given / When / Then” Gherkin.
+Here’s how I’d write the full story from the example:
+—
+Title: User should be able to add item to cart.
+As a Shopper I want to put items in my shopping cart Because I want to manage items before I check out
+Given I’m a logged-in User When I go to the Item page And I click “Add item to cart” Then the quantity of items in my cart should go up And my subtotal should increment And the warehouse inventory should decrement
+—
+> Also, is a Scenario the same thing as a User Story?
+Calling out “Feature” and “Scenario” is more proper Gherkin, but I rarely find it useful enough to include. The exception is when a Product Owner and I are talking through a story, and we start to find switches—the words “if” and “or” and “unless” are good hints that you’ve got more that one story going—and then we might start throwing Scenarios in. E.g, if the stakeholder continued telling us about the shopping cart, and said “…unless we’re out of stock, in which case we should notify the shopper, add an item request to our merchandiser, and set up an email-alert for the shopper when the item comes back in stock.”, then we’d break out Scenarios:
+- Scenario: Item is in stock - Scenario: Item is out of stock
+We might subsequently break each scenario into its own story, at the discretion of the development team.
