@@ -1,6 +1,16 @@
-div.answer id="answer-#{answer.id}"
-  p.answer-body = answer.body
-  - if current_user && current_user.author_of?(answer)
-    .btn-group role='group' aria-label='edit-delete' 
-      = link_to 'Edit answer', edit_question_answer_path(@question.id,answer.id), method: :get, class: 'btn btn-default'
-      = link_to 'Delete answer', question_answer_path(@question.id,answer.id), method: :delete, class: 'btn btn-danger'
+div id="answer-#{answer.id}" 
+  = answer.body
+
+  - if answer.is_best
+      strong Best answer
+  - elsif user_signed_in? && current_user.author_of?(@question) && answer.persisted?
+      = link_to 'Set best', question_answer_set_best_path(@question.id, answer.id), method: :patch, remote: true
+
+  - if user_signed_in? && current_user.author_of?(answer)
+      = link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+      = link_to 'Delete answer', question_answer_path(@question.id, answer.id), method: :delete, remote: true
+    
+      = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+        = f.label :body, 'Edited answer'
+        = f.text_area :body
+        = f.submit 'Save answer'

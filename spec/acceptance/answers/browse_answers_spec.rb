@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Browse answers for question' do  
   given(:user) { create(:user) }

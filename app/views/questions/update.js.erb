@@ -1,0 +1,14 @@
+<% if @question.errors.any? %> 
+  <% @question.errors.full_messages.each do |message| %>
+    $('#flashes').html("<div class='alert alert-warning'><%= j message %></div>");
+  <% end %>
+<% else %>
+  $('#flashes').html("<div class='alert alert-success'>Your question was successfully updated.</div>");
+  $('#question').html('<%= j render @question %>');
+  $('form#edit-question-form').addClass('hide');
+  $('#question').on('click', 'a.edit-question-link', function(e) {
+    e.preventDefault();
+    $(this).hide();
+    $('form#edit-question-form').removeClass('hide');
+  });
+<% end %>

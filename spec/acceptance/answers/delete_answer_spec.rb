@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Delete answers' do
 
@@ -18,7 +18,7 @@ feature 'Delete answers' do
     expect(page).to_not have_link 'Delete answer'
   end
 
-  scenario  'Authenticated user deletes own answers' do
+  scenario  'Authenticated user deletes own answers', js: true do
     sign_in(user)
     visit question_path(question)
     click_on 'Delete answer'

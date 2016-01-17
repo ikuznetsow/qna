@@ -1,37 +1,25 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_question, only: [:create, :destroy, :edit, :update]
-  before_action :load_answer, only: [:edit, :update]
-
-  def edit
-
-  end
+  before_action :load_question, only: [:create, :destroy, :update, :set_best]
+  before_action :load_answer, only: [:update, :destroy, :set_best]
 
   def create
-    @answer = @question.answers.build(answer_params)
-    @answer.user = current_user
-    @answer.save
+    @answer = @question.answers.create(answer_params.merge(user: current_user))
   end
 
   def update
-    if current_user.author_of?(@answer)
-      @answer.update(answer_params)
-      flash[:success] = 'Your answer was successfully updated.'
-    else
-      flash[:notice] = "You haven't access for this action."
+    @answer.update(answer_params) if current_user.author_of?(@answer)
+  end
+
+  def set_best
+    if current_user.author_of?(@question)
+      @question.answers.update_all(is_best: false)
+      @answer.update(is_best: true)
     end
-    redirect_to @question
   end
 
   def destroy
-    @answer = @question.answers.find(params[:id])
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      flash[:success] = 'Your answer was deleted.'
-    else
-      flash[:notice] = "You haven't access for this action."
-    end
-    redirect_to @question
+    @answer.destroy if current_user.author_of?(@answer)
   end
 
   private
@@ -44,6 +32,6 @@ class AnswersController < ApplicationController
   end
 
   def load_answer
-    @answer = Answer.find(params[:id])
+    @answer = @question.answers.find(params[:id])
   end
 end

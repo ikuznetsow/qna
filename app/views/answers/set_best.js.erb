@@ -4,8 +4,7 @@
   <% end %>
 <% else %>
   <% if @answer.persisted? %>
-    $('#flashes').html("<div class='alert alert-success'>You answer was successfully created.</div>");
-    $('.answers').append('<%= j render @answer %>');
-    $('#answer_body').val('');
+    $('#flashes').html("<div class='alert alert-success'>Best answer has been set.</div>");
+    $('.answers').html('<%= j render @question.answers %>');
   <% end %>
 <% end %>
