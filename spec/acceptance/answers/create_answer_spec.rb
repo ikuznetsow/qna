@@ -10,8 +10,8 @@ feature 'Create answer' do
     visit question_path(question)
     fill_in 'Your answer', with: answer.body
     click_on 'Create Answer'
+    sleep(1)
 
-    expect(page).to have_content 'You need to sign in'
     expect(current_path).to eq new_user_session_path
   end
 
