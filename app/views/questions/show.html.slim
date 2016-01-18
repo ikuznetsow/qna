@@ -1,13 +1,20 @@
 #question
   = render @question
     
-.answers class="#{'hidden' unless @question.answers.any?}" 
+.answers class="#{'hidden' unless @question.answers.any?}"
+  / - if @question.answers.any?
   = render @question.answers
 
 .nav
   = form_for [@question, @answer], remote: true do |f|
       p= f.label :body, 'Your answer'
       p= f.text_area :body
+
+      p Attachments:
+      = f.fields_for :attachments do |a|
+        = a.label :file
+        = a.file_field :file
+      
       p= f.submit 'Create Answer', class: 'btn btn-primary'
 
 = link_to 'Back', questions_path

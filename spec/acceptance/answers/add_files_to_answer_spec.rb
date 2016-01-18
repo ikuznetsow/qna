@@ -14,13 +14,13 @@ feature 'Add files to answer', %q{
     visit question_path(question)
   end
 
-  scenario 'Authenticated user adds file to own answer' do
+  scenario 'Authenticated user adds file to own answer', js: true do
     fill_in 'Your answer', with: 'My answer'
-    attach_file 'File', "#{Rails.root}/spec/files/rails_helper.rb"
+    attach_file 'File', "#{Rails.root}/public/robots.txt"
     click_on 'Create Answer'
 
     within '.answers' do
-      expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/1/rails_helper.rb'
+      expect(page).to have_link 'robots.txt', href: '/uploads/attachment/file/1/robots.txt'
     end
   end
 end

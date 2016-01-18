@@ -8,6 +8,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.build
+    @answer.attachments.build
   end
 
   def new
@@ -19,7 +20,7 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
     @question.user = current_user
 
-    if @question.save 
+    if @question.save
       flash[:success] = 'Your question successfully created.'
       redirect_to @question
     else

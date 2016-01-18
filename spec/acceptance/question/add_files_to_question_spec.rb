@@ -17,9 +17,9 @@ feature 'Add files to question', %q{
   scenario 'Authenticated user adds file to own question' do
     fill_in 'Title', with: question.title
     fill_in 'Body', with: question.body
-    attach_file 'File', "#{Rails.root}/spec/files/rails_helper.rb"
+    attach_file 'File', "#{Rails.root}/public/robots.txt"
     click_on 'Create'
 
-    expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/1/rails_helper.rb'
+    expect(page).to have_link 'robots.txt', href: '/uploads/attachment/file/1/robots.txt'
   end
 end

@@ -1,4 +1,4 @@
-= form_for @question, remote: remote, html: html, authenticity_token: true do |f| 
+= form_for @question, remote: remote, html: html do |f| 
   = f.label :title
   = f.text_field :title
   = f.label :body
@@ -7,8 +7,6 @@
   p Attachments:
   = f.fields_for :attachments do |a|
     = a.label :file
-    = a.file_field :file, multiple: true
-    /       = render 'shared/attachment_fields', f: a
-    /       = link_to_add_association 'add file', f, :attachments, partial: 'shared/attachment_fields'
+    = a.file_field :file
 
   = f.submit submit_text

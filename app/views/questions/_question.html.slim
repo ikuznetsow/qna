@@ -1,10 +1,9 @@
 h4= @question.title
 p= @question.body
 
-p Attachments
-- if @question.attachments.any?
-  - @question.attachments.each do |a|
-    = link_to a.file.identifier, a.file.url
+.attachments class="#{'hidden' unless @question.attachments.any?}" 
+  p Attachments
+  = render @question.attachments
 p
 - if user_signed_in? && current_user.author_of?(@question)
   = link_to 'Delete question', question_path(@question.id), method: :delete, data: { confirm: 'You going to delete the question?' }
