@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :attachment do
-    file "MyString"
+    association :attachable, factory: :question
+    file { File.open("#{Rails.root}/public/robots.txt") }
   end
-
 end

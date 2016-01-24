@@ -1,12 +1,15 @@
 = form_for @question, remote: remote, html: html do |f| 
-  = f.label :title
-  = f.text_field :title
-  = f.label :body
-  = f.text_area :body
+  p= f.label :title
+  p= f.text_field :title
+  p= f.label :body
+  p= f.text_area :body
   
-  p Attachments:
-  = f.fields_for :attachments do |a|
-    = a.label :file
-    = a.file_field :file
-
-  = f.submit submit_text
+  #attachments 
+    p Attachments:
+    = f.fields_for :attachments do |a|
+      = render 'attachments/form', f: a
+      p
+    = link_to_add_association 'Add file', f, :attachments, partial: 'attachments/form',
+        'data-association-insertion-method' => 'append'
+        
+  p= f.submit submit_text

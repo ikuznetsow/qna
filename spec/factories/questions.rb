@@ -7,9 +7,15 @@ FactoryGirl.define do
     title
     body "TestQuestionText"
     user
+  
+    trait :with_attachment do
+      after(:create) do |question|
+        question.attachments << create(:attachment)
+      end
+    end
   end
 
-	factory :invalid_question, class: 'Question' do
+  factory :invalid_question, class: 'Question' do
     title nil
     body nil
     user

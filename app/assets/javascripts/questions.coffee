@@ -6,4 +6,5 @@ $ ->
   $('#question').on 'click', 'a.edit-question-link', (e) ->
     e.preventDefault()
     $(this).hide()
+    
     $('form#edit-question-form').show()
