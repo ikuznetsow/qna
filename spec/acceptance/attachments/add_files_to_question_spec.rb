@@ -15,15 +15,6 @@ feature 'Add files to question', %q{
     visit new_question_path
   end
 
-  scenario 'Authenticated user adds file to own question', js: true do
-    fill_in 'Title', with: question.title
-    fill_in 'Body', with: question.body
-    attach_file 'File', "#{Rails.root}/public/robots.txt"
-    click_on 'Create'
-
-    expect(page).to have_link 'robots.txt', href: '/uploads/attachment/file/1/robots.txt'
-  end
-
   scenario 'User adds 2 files to question', js: true do
     fill_in 'Title', with: question.title
     fill_in 'Body', with: question.body
