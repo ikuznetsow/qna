@@ -36,10 +36,8 @@ feature 'Add files to question', %q{
     expect(page).to have_link 'favicon.ico', href: '/uploads/attachment/file/2/favicon.ico'
   end
 
-
-  scenario 'User updates question attachment', js: true do
-    visit question_path(question_with_attachment)
-      
+  scenario 'User add attachment to question', js: true do
+    visit question_path(question)
     within '#question' do
       click_on 'Edit question'
       click_on 'Add file'
@@ -51,4 +49,15 @@ feature 'Add files to question', %q{
     expect(page).to have_link 'favicon.ico'
   end
 
+  scenario 'User deletes attachment from question', js: true do
+    visit question_path(question_with_attachment)
+    within '#question' do
+      click_on 'Edit question'
+      click_on 'Delete file'
+      click_on 'Save question'
+    end
+
+    expect(page).to have_content 'Your question was successfully updated'
+    expect(page).to_not have_content 'robots.txt'
+  end  
 end

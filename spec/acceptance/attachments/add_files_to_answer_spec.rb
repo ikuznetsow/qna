@@ -23,4 +23,7 @@ feature 'Add files to answer', %q{
       expect(page).to have_link 'robots.txt', href: '/uploads/attachment/file/1/robots.txt'
     end
   end
+
+  scenario 'User add attachment to existing answer', js: true 
+  scenario 'User deletes attachment from answer', js: true
 end
