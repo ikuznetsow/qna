@@ -1,13 +1,23 @@
 #question
   = render @question
     
-.answers class="#{'hidden' unless @question.answers.any?}" 
+.answers class="#{'hidden' unless @question.answers.any?}"
+  / - if @question.answers.any?
   = render @question.answers
 
 .nav
   = form_for [@question, @answer], remote: true do |f|
       p= f.label :body, 'Your answer'
       p= f.text_area :body
+
+      .attachment_fields
+        p Attachments:
+        = f.fields_for :attachments do |a|
+          = render 'attachments/form', f: a
+        p
+        = link_to_add_association 'Add file', f, :attachments, partial: 'attachments/form',
+            'data-association-insertion-method' => 'append'
+
       p= f.submit 'Create Answer', class: 'btn btn-primary'
 
 = link_to 'Back', questions_path

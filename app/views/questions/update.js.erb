@@ -5,10 +5,10 @@
 <% else %>
   $('#flashes').html("<div class='alert alert-success'>Your question was successfully updated.</div>");
   $('#question').html('<%= j render @question %>');
-  $('form#edit-question-form').addClass('hide');
+  $('form#edit-question-form').hide();
   $('#question').on('click', 'a.edit-question-link', function(e) {
     e.preventDefault();
     $(this).hide();
-    $('form#edit-question-form').removeClass('hide');
+    $('form#edit-question-form').show();
   });
 <% end %>

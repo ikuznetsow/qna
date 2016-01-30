@@ -16,6 +16,9 @@ gem 'slim-rails'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
+gem 'carrierwave'
+gem 'remotipart'
+gem 'cocoon'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

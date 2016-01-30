@@ -1,11 +1,11 @@
 h4= @question.title
 p= @question.body
+
+.attachments class="#{'hidden' unless @question.attachments.any?}" 
+  p Attachments
+  = render @question.attachments
+p
 - if user_signed_in? && current_user.author_of?(@question)
   = link_to 'Delete question', question_path(@question.id), method: :delete, data: { confirm: 'You going to delete the question?' }
   = link_to 'Edit question', '', class: 'edit-question-link'
-  = form_for [@question], remote: true, html: { id: "edit-question-form" } do |f| 
-    = f.label :title
-    = f.text_field :title
-    = f.label :body
-    = f.text_area :body
-    = f.submit 'Save question'
+  = render partial: 'form', locals: { submit_text: 'Save question', remote: true, html: { id: 'edit-question-form' } }

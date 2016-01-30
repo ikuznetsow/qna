@@ -1,0 +1,4 @@
+- if attachment.persisted?
+  div id="attachment-#{attachment.id}" 
+  
+    = link_to attachment.file.identifier, attachment.file.url

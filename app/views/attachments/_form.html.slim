@@ -1,0 +1,8 @@
+.nested-fields
+  - if f.object.new_record?
+    = f.label :file
+    = f.file_field :file
+  - else
+    = f.text_field :file, value: f.object.file.identifier
+
+  = link_to_remove_association 'Delete file', f
