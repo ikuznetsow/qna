@@ -3,6 +3,7 @@
     
 .answers class="#{'hidden' unless @question.answers.any?}"
   / - if @question.answers.any?
+  p
   = render @question.answers
 
 .nav
